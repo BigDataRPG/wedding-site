@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>RSVP · Sorratat & Witita · 12.12.2026</title>
+<title>RSVP · Witita & Sorratat · 12.12.2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600&family=Sarabun:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -62,6 +62,7 @@ body {
 .divider { display: flex; align-items: center; gap: 12px; margin: 14px 0; color: var(--gold); opacity: 0.45; font-size: 13px; }
 .divider::before, .divider::after { content: ''; flex: 1; height: 0.5px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
 .date-stamp { font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 0.4em; color: var(--gold); opacity: 0.85; }
+.event-start { font-family: 'Sarabun', sans-serif; font-size: 14px; letter-spacing: 0; color: var(--ivory); opacity: 0.72; margin-top: 8px; }
 .deadline-note {
   display: inline-block; margin-top: 12px;
   background: rgba(139,0,0,0.18); border: 0.5px solid rgba(196,30,58,0.35);
@@ -335,8 +336,9 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.65; }
 <!-- HEADER -->
 <header class="header">
   <p class="eyebrow">You are cordially invited</p>
-  <h1 class="names">Sorratat<br><em>&amp; Witita</em></h1>
+  <h1 class="names">Witita<br><em>&amp; Sorratat</em></h1>
   <div class="divider">✦</div>
+  <p class="event-start">งานแต่งงานเริ่มวันที่</p>
   <p class="date-stamp">12 · 12 · 2026</p>
   <p class="deadline-note">กรุณาตอบรับภายใน 15 พฤศจิกายน 2569</p>
 </header>
@@ -363,6 +365,11 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.65; }
     <div class="field">
       <div class="field-label">ชื่อ-นามสกุล <span class="req">*</span></div>
       <input type="text" id="mainName" placeholder="ชื่อของท่าน…" autocomplete="name" autocorrect="off">
+    </div>
+
+    <div class="field">
+      <div class="field-label">ชื่อเล่น</div>
+      <input type="text" id="nickname" placeholder="ชื่อเล่นของท่าน…" autocorrect="off">
     </div>
 
     <div class="field">
@@ -416,30 +423,10 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.65; }
         <input type="hidden" id="childCount" value="0">
       </div>
 
-      <!-- companion list -->
-      <div id="companionSection" class="hidden">
-        <div class="field-label" style="margin-top:20px; margin-bottom:10px;">รายชื่อผู้ติดตาม</div>
-        <div id="guestsList"></div>
-        <button class="add-btn" onclick="addGuest()">+ เพิ่มรายชื่อ</button>
-      </div>
+
     </div>
 
-    <div class="section-gap"></div>
-    <div class="card">
-      <p class="card-title">✦ &nbsp; ข้อมูลอาหาร</p>
-      <div class="field">
-        <div class="field-label">ข้อจำกัดด้านอาหาร</div>
-        <div class="chips" id="dietChips">
-          <span class="chip active" data-val="ไม่มี" onclick="pickDiet(this)">ไม่มี</span>
-          <span class="chip" data-val="มังสวิรัติ" onclick="pickDiet(this)">มังสวิรัติ</span>
-          <span class="chip" data-val="เจ" onclick="pickDiet(this)">เจ</span>
-          <span class="chip" data-val="ฮาลาล" onclick="pickDiet(this)">ฮาลาล</span>
-          <span class="chip" data-val="แพ้อาหารทะเล" onclick="pickDiet(this)">แพ้อาหารทะเล</span>
-          <span class="chip" data-val="อื่นๆ" onclick="pickDiet(this)">อื่นๆ</span>
-        </div>
-        <input type="text" id="dietCustom" placeholder="ระบุเพิ่มเติม…" style="margin-top:10px" oninput="clearDiet()" autocorrect="off">
-      </div>
-    </div>
+
   </div>
 
   <!-- MESSAGE (always shown) -->
@@ -473,14 +460,12 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.65; }
 </div><!-- /page -->
 
 <script>
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzrA_VGNsvt5gmPWs1bjL7mo0qRRvE6Clo2hcsS6fxRKqqT2jvGi_csaJnu3AikPf7i/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyFXrl3Npb0xU5E0CZj2LkLPrkPrI23EcmOZYbQSBOf37sqS-emOHbo7xrMhuU5mFyg/exec';
 
 let attending = null;
 let relation = '';
-let diet = 'ไม่มี';
 let totalGuests = 1;
 let childGuests = 0;
-let guestIdx = 0;
 
 /* ── ATTEND ── */
 function setAttend(val) {
@@ -503,75 +488,18 @@ function clearRelation() {
   relation = '';
 }
 
-/* ── DIET ── */
-function pickDiet(el) {
-  document.querySelectorAll('#dietChips .chip').forEach(c => c.classList.remove('active'));
-  el.classList.add('active');
-  diet = el.dataset.val;
-  document.getElementById('dietCustom').value = '';
-}
-function clearDiet() {
-  document.querySelectorAll('#dietChips .chip').forEach(c => c.classList.remove('active'));
-  diet = '';
-}
-
 /* ── STEPPERS ── */
 function adjustCount(d) {
   totalGuests = Math.max(1, Math.min(20, totalGuests + d));
   document.getElementById('countDisplay').textContent = totalGuests;
   document.getElementById('totalCount').value = totalGuests;
   if (childGuests > totalGuests) { childGuests = totalGuests; document.getElementById('childDisplay').textContent = childGuests; document.getElementById('childCount').value = childGuests; }
-  syncCompanions();
 }
 function adjustChild(d) {
   childGuests = Math.max(0, Math.min(totalGuests, childGuests + d));
   document.getElementById('childDisplay').textContent = childGuests;
   document.getElementById('childCount').value = childGuests;
 }
-function syncCompanions() {
-  const extra = totalGuests - 1;
-  const cs = document.getElementById('companionSection');
-  if (extra <= 0) { cs.classList.add('hidden'); return; }
-  cs.classList.remove('hidden');
-  const list = document.getElementById('guestsList');
-  const rows = list.querySelectorAll('.guest-row');
-  if (rows.length < extra) {
-    for (let i = rows.length; i < extra; i++) addGuest();
-  } else {
-    const all = list.querySelectorAll('.guest-row');
-    for (let i = extra; i < all.length; i++) all[i].remove();
-  }
-}
-
-/* ── GUESTS ── */
-function addGuest() {
-  guestIdx++;
-  const id = guestIdx;
-  const div = document.createElement('div');
-  div.className = 'guest-row';
-  div.id = 'grow-' + id;
-  div.innerHTML =
-    '<div class="guest-row-inner">' +
-      '<input type="text" id="gn-' + id + '" placeholder="ชื่อผู้ติดตาม…" autocorrect="off">' +
-      '<select id="gr-' + id + '">' +
-        '<option value="">ความสัมพันธ์…</option>' +
-        '<option value="คู่สมรส/แฟน">คู่สมรส / แฟน</option>' +
-        '<option value="บุตร/ธิดา">บุตร / ธิดา</option>' +
-        '<option value="ผู้ปกครอง">ผู้ปกครอง</option>' +
-        '<option value="พี่น้อง">พี่น้อง</option>' +
-        '<option value="เพื่อน">เพื่อน</option>' +
-        '<option value="อื่นๆ">อื่นๆ</option>' +
-      '</select>' +
-    '</div>' +
-    '<button class="remove-btn" onclick="removeGuest(' + id + ')" aria-label="ลบ">×</button>';
-  document.getElementById('guestsList').appendChild(div);
-}
-function removeGuest(id) {
-  const el = document.getElementById('grow-' + id);
-  if (el) el.remove();
-  if (totalGuests > 1) { totalGuests--; document.getElementById('countDisplay').textContent = totalGuests; document.getElementById('totalCount').value = totalGuests; }
-}
-
 /* ── PHONE DEDUP HINT ── */
 let dupTimer;
 document.addEventListener('DOMContentLoaded', () => {
@@ -602,30 +530,18 @@ async function submitRSVP() {
   if (!phone || phone.replace(/\D/g,'').length < 9) return showError('กรุณากรอกเบอร์โทรศัพท์ให้ครบ');
   if (!rel) return showError('กรุณาเลือกหรือระบุความสัมพันธ์กับเจ้าภาพ');
 
-  let companions = [];
-  if (attending) {
-    document.querySelectorAll('.guest-row').forEach(row => {
-      const m = row.id.match(/grow-(\d+)/);
-      if (!m) return;
-      const gn = document.getElementById('gn-' + m[1])?.value.trim() || '';
-      const gr = document.getElementById('gr-' + m[1])?.value || '';
-      if (gn) companions.push(gn + (gr ? '(' + gr + ')' : ''));
-    });
-  }
-
-  const dietFinal = diet || document.getElementById('dietCustom').value.trim() || '-';
+  const nickname = document.getElementById('nickname').value.trim();
   const cleanPhone = phone.replace(/\D/g,'');
 
   const payload = {
     timestamp: new Date().toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' }),
     name,
+    nickname: nickname || '-',
     phone: cleanPhone,
     relation: rel,
     attending: attending ? 'มาร่วมงาน' : 'ไม่สะดวก',
     totalGuests: attending ? String(totalGuests) : '0',
     childCount: attending ? String(childGuests) : '0',
-    companions: companions.join(', ') || '-',
-    dietary: dietFinal,
     message: msg || '-'
   };
 
