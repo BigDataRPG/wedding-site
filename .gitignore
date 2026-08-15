@@ -24,6 +24,8 @@ npm-debug.log*
 # Local docs
 plan.md
 CHECKLIST.md
+assets/README.txt
+assets/couple-rings-original.jpg
 google-apps-script.gs
 .vercel
 .env*
