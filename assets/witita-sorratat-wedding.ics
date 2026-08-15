@@ -1,0 +1,17 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//AeyBoyd//Wedding//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:aeyboyd-tilldeath-20261212@wedding-site-rust-rho.vercel.app
+DTSTAMP:20260815T000000Z
+DTSTART:20261212T080000Z
+DTEND:20261212T150000Z
+SUMMARY:Wedding of Witita & Sorratat
+DESCRIPTION:Gothic Romance Wedding · #AeyBoydTillDeath\nRSVP: https://wedding-site-rust-rho.vercel.app/rsvp
+LOCATION:St. Tropez Wedding & Convention\, Hall 1\, Ratchaphruek Rd\, Pak Kret\, Nonthaburi
+URL:https://wedding-site-rust-rho.vercel.app/
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR
