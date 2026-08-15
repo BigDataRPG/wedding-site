@@ -1,8 +1,5 @@
 {
   "cleanUrls": true,
-  "redirects": [
-    { "source": "/", "destination": "/wedding-rsvp", "permanent": false }
-  ],
   "headers": [
     {
       "source": "/(.*)",
