@@ -21,9 +21,8 @@ desktop.ini
 *.log
 npm-debug.log*
 
-# Local docs
-plan.md
-CHECKLIST.md
+# Local docs (keep all .md notes out of the repo)
+*.md
 assets/README.txt
 assets/couple-rings-original.jpg
 google-apps-script.gs

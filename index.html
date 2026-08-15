@@ -8,7 +8,7 @@
 <meta property="og:title" content="Witita & Sorratat · 12.12.2026">
 <meta property="og:description" content="A Gothic Romance Wedding — Till Death Do Us Part. Open your invitation.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;500;600&family=Sarabun:wght@300;400&display=swap" rel="stylesheet">
 <style>
 /* ════════════════════ TOKENS ════════════════════ */
 :root{
@@ -229,32 +229,47 @@ body.gated{overflow:hidden;height:100vh}
 .cal-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:36px}
 
 /* ════════════════════ S3 · MUSIC & TIMELINE ════════════════════ */
-.music-card{display:flex;align-items:center;gap:18px;margin:34px 0 46px}
+.music-card{display:flex;align-items:center;gap:16px;max-width:380px;margin:30px auto 46px;padding:14px 20px}
 .music-btn{
-  width:64px;height:64px;border-radius:50%;flex-shrink:0;cursor:pointer;
-  background:radial-gradient(circle at 35% 30%, #C41E3A, #8B0000 60%, #4E0208);
-  border:1px solid var(--border-strong);color:var(--gold-light);font-size:20px;
-  display:flex;align-items:center;justify-content:center;transition:all .3s;
-  box-shadow:0 4px 14px rgba(0,0,0,.5), inset 0 2px 4px rgba(255,255,255,.15);
+  width:72px;height:72px;border-radius:50%;flex-shrink:0;cursor:pointer;position:relative;padding:0;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 0 30%, rgba(232,201,122,.14) 31% 32%, transparent 33% 44%, rgba(232,201,122,.10) 45% 46%, transparent 47%),
+    repeating-radial-gradient(circle at 50% 50%, #120a0d 0 1.5px, #221318 1.5px 3.5px);
+  border:2px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;transition:box-shadow .3s;
+  box-shadow:0 6px 18px rgba(0,0,0,.55), inset 0 0 16px rgba(0,0,0,.7);
+  animation:discSpin 3.6s linear infinite;animation-play-state:paused;
 }
-.music-btn:hover{box-shadow:0 0 22px rgba(139,0,0,.55)}
+.music-btn:hover{box-shadow:0 0 22px rgba(139,0,0,.55), inset 0 0 16px rgba(0,0,0,.7)}
+.music-btn.playing{animation-play-state:running}
+@keyframes discSpin{to{transform:rotate(360deg)}}
+.disc-label{
+  width:28px;height:28px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle at 35% 30%, #C41E3A, #8B0000 70%, #4E0208);
+  border:1px solid var(--gold);color:var(--gold-light);font-size:9px;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+}
 .music-meta .m-eyebrow{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);opacity:.8}
-.music-meta .m-title{font-family:'IM Fell English',serif;font-size:22px;margin-top:4px}
-.music-meta .m-note{font-size:14px;font-style:italic;color:var(--muted)}
+.music-meta .m-title{font-family:'IM Fell English',serif;font-size:19px;margin-top:3px}
+.music-meta .m-artist{font-size:13px;font-style:italic;color:var(--muted);margin-top:1px}
 /* timeline */
-.timeline{position:relative;margin-top:10px;padding-left:34px}
-.timeline::before{content:'';position:absolute;left:9px;top:8px;bottom:8px;width:1px;
+.timeline{position:relative;margin-top:10px;padding-left:54px}
+.timeline::before{content:'';position:absolute;left:16px;top:8px;bottom:8px;width:1px;
   background:linear-gradient(180deg,transparent,var(--border-strong) 12%,var(--border-strong) 88%,transparent)}
 .tl-item{position:relative;padding:0 0 34px}
 .tl-item:last-child{padding-bottom:0}
-.tl-item::before{
-  content:'';position:absolute;left:-31px;top:7px;width:11px;height:11px;border-radius:50%;
-  background:radial-gradient(circle at 35% 30%, var(--crimson-light), var(--crimson-deep));
-  border:1.5px solid var(--gold);box-shadow:0 0 10px rgba(139,0,0,.6);
+.tl-icon{
+  position:absolute;left:-54px;top:0;width:33px;height:33px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #241318, var(--dark-2) 70%);
+  border:1px solid var(--gold);color:var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 12px rgba(139,0,0,.45);
 }
+.tl-icon svg{width:19px;height:19px;display:block}
 .tl-time{font-family:'Cinzel',serif;font-size:13px;letter-spacing:.3em;color:var(--gold-light)}
 .tl-name{font-family:'IM Fell English',serif;font-size:23px;margin:4px 0 2px}
 .tl-desc{font-size:16px;font-style:italic;color:var(--muted)}
+.tl-desc-th{font-family:'Sarabun',sans-serif;font-weight:300;font-size:14px;color:var(--gold-light);opacity:.8;margin-top:3px}
 
 /* ════════════════════ S4 · DRESS CODE ════════════════════ */
 .swatches{display:flex;justify-content:center;gap:clamp(18px,6vw,44px);margin:40px 0 26px}
@@ -422,35 +437,45 @@ footer{position:relative;z-index:1;text-align:center;padding:70px 24px 90px;bord
   </div>
 
   <div class="music-card gcard reveal">
-    <button class="music-btn" id="musicBtn" aria-label="Play our song">▶</button>
+    <button class="music-btn" id="musicBtn" aria-label="Play our song">
+      <span class="disc-label" id="discGlyph" aria-hidden="true">▶</span>
+    </button>
     <div class="music-meta">
       <p class="m-eyebrow">Our Soundtrack</p>
       <p class="m-title" id="songTitle">Ordinary</p>
-      <p class="m-note">Press play to set the mood while you read</p>
+      <p class="m-artist">Alex Warren</p>
     </div>
     <audio id="bgm" src="assets/ordinary.mp3" loop preload="none"></audio>
   </div>
 
   <div class="timeline reveal">
     <div class="tl-item">
+      <span class="tl-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.2" cy="14.5" r="5"/><circle cx="14.8" cy="14.5" r="5"/><path d="M12 7 L10.3 4.8 L12 2.8 L13.7 4.8 Z"/></svg></span>
       <p class="tl-time">15:09</p>
       <p class="tl-name">Khan Maak Procession &amp; Ring Ceremony</p>
       <p class="tl-desc">The groom's procession arrives, and rings are exchanged in the Thai engagement tradition.</p>
+      <p class="tl-desc-th">แห่ขันหมาก และพิธีสวมแหวนหมั้น</p>
     </div>
     <div class="tl-item">
+      <span class="tl-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 C10 6.5 8 9 8 11.5 a4 4 0 0 0 8 0 C16 9 14 6.5 12 3.5 Z"/><path d="M5.5 19.5 c2-1.5 4.3-1.5 6.5 0 c2.2-1.5 4.5-1.5 6.5 0"/></svg></span>
       <p class="tl-time">16:09</p>
       <p class="tl-name">Rub Wai Ceremony</p>
       <p class="tl-desc">Paying respects to the elders and receiving their blessings.</p>
+      <p class="tl-desc-th">พิธีรับไหว้ รดน้ำสังข์ รับพรจากญาติผู้ใหญ่</p>
     </div>
     <div class="tl-item">
+      <span class="tl-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 17 h15"/><path d="M6.2 17 a5.8 5.8 0 0 1 11.6 0"/><path d="M12 11.2 v-1.4"/><circle cx="12" cy="8.6" r="1"/></svg></span>
       <p class="tl-time">18:00</p>
       <p class="tl-name">Dinner Banquet</p>
       <p class="tl-desc">A shared Chinese banquet (Toh Chin) by candlelight.</p>
+      <p class="tl-desc-th">งานเลี้ยงฉลองมงคลสมรส (โต๊ะจีน)</p>
     </div>
     <div class="tl-item">
+      <span class="tl-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 3 h7 c0 3.6-1.6 5.8-3.5 5.8 S8.5 6.6 8.5 3 Z"/><path d="M12 8.8 V19 M9 21 h6"/><circle cx="10.9" cy="5" r=".4"/><circle cx="13.2" cy="4.2" r=".4"/></svg></span>
       <p class="tl-time">20:30</p>
       <p class="tl-name">After Party</p>
       <p class="tl-desc">Music, dancing, and one last toast — until death do us part.</p>
+      <p class="tl-desc-th">อาฟเตอร์ปาร์ตี้ ดื่มฉลองส่งท้ายค่ำคืน</p>
     </div>
   </div>
 </section>
@@ -519,7 +544,7 @@ footer{position:relative;z-index:1;text-align:center;padding:70px 24px 90px;bord
   <div class="map-frame reveal">
     <!-- ▼▼ Optional: swap the q= query for your exact Google Maps place name/link ▼▼ -->
     <iframe title="Map to St. Tropez Hall 1"
-      src="https://www.google.com/maps?q=St.+Tropez+Wedding+%26+Convention+Ratchaphruek+Pakkret+Nonthaburi&output=embed"
+      src="https://www.google.com/maps/embed?origin=mfe&pb=!1m3!2m1!1sSt.Tropez+Wedding+And+Convention+Ratchaphruek+Pak+Kret+Nonthaburi!6i15!3m1!1sth!5m1!1sth"
       loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
   </div>
 
@@ -605,7 +630,11 @@ document.getElementById('icsBtn').href = 'data:text/calendar;charset=utf-8,' + e
 /* ── MUSIC TOGGLE ── */
 const bgm = document.getElementById('bgm');
 const musicBtn = document.getElementById('musicBtn');
-function setMusicUI(playing){ musicBtn.textContent = playing ? '❚❚' : '▶'; musicBtn.setAttribute('aria-label', playing?'Pause our song':'Play our song'); }
+function setMusicUI(playing){
+  musicBtn.classList.toggle('playing', playing);
+  document.getElementById('discGlyph').textContent = playing ? '❚❚' : '▶';
+  musicBtn.setAttribute('aria-label', playing?'Pause our song':'Play our song');
+}
 musicBtn.addEventListener('click', ()=>{
   if(bgm.paused){ bgm.play().then(()=>setMusicUI(true)).catch(()=>{ setMusicUI(false); }); }
   else { bgm.pause(); setMusicUI(false); }
