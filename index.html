@@ -479,6 +479,48 @@ body.gated{overflow:hidden;height:100vh}
 .map-frame iframe{display:block;width:100%;height:340px;border:0}
 .map-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px}
 
+/* ════════════════════ S7 · PRE-WEDDING CAROUSEL ════════════════════ */
+/* runs full-bleed so the neighbouring frames have room to drift in from both sides */
+#gallery{max-width:760px;padding-left:0;padding-right:0}
+.carousel{position:relative;margin:0 auto;max-width:none}
+.car-window{position:relative;overflow:hidden;touch-action:pan-y;cursor:grab}
+.car-window.dragging{cursor:grabbing}
+.car-track{display:flex;align-items:center;will-change:transform;transition:transform .62s cubic-bezier(.22,.61,.36,1)}
+.car-track.nosnap{transition:none}
+/* one frame in focus; the two beside it hang back, out of the eye's centre */
+.car-slide{position:relative;flex:0 0 78%;aspect-ratio:4/5;overflow:hidden;border-radius:3px;
+  background:var(--dark-2);cursor:pointer;
+  opacity:.45;filter:blur(3px) saturate(.7);transform:scale(.9);
+  transition:opacity .62s ease,filter .62s ease,transform .62s ease}
+.car-slide.active{opacity:1;filter:none;transform:scale(1);cursor:grab;
+  box-shadow:0 22px 55px rgba(0,0,0,.6)}
+.car-slide img{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .7s ease}
+.car-slide img.ready{opacity:1}
+/* stand-in until the photograph is dropped into assets/ */
+.car-ph{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;padding:24px;text-align:center;color:var(--muted);font-style:italic;font-size:16px;
+  background:linear-gradient(160deg,#16131F,#0B0A0F)}
+.car-slide.empty .car-ph{display:flex}
+.car-slide.empty img{display:none}
+.car-ph .ph-num{font-family:'Cinzel',serif;font-style:normal;font-size:26px;letter-spacing:.16em;color:var(--gold);opacity:.6}
+.car-ph .ph-file{font-family:'Cinzel',serif;font-style:normal;font-size:10px;letter-spacing:.2em;color:var(--gold);opacity:.5}
+/* arrows sit inside the glass so they never overflow the 520px frame on phones */
+.car-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:3;
+  width:44px;height:44px;display:flex;align-items:center;justify-content:center;padding:0;
+  border:1px solid var(--border-strong);border-radius:50%;cursor:pointer;color:var(--gold-light);
+  background:rgba(11,10,15,.5);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);transition:all .3s}
+.car-nav:hover{background:rgba(110,20,35,.62);border-color:var(--gold);color:var(--gold-hot)}
+.car-nav:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.car-nav svg{width:15px;height:15px;display:block}
+.car-nav.prev{left:8px}
+.car-nav.next{right:8px}
+.car-foot{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:26px}
+.car-dots{display:flex;gap:12px}
+.car-dot{position:relative;width:10px;height:10px;padding:0;border:0;background:none;cursor:pointer}
+.car-dot::before{content:'';position:absolute;inset:0;transform:rotate(45deg);
+  border:1px solid var(--border-strong);transition:background .35s,border-color .35s,box-shadow .35s}
+.car-dot[aria-current="true"]::before{background:var(--gold);border-color:var(--gold);box-shadow:0 0 10px rgba(201,168,76,.75)}
+.car-dot:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
 /* ════════════════════ FOOTER ════════════════════ */
 footer{position:relative;z-index:1;text-align:center;padding:70px 24px 90px;border-top:1px solid rgba(201,168,76,.12);margin-top:40px}
 .foot-motto{font-family:'Pinyon Script',cursive;font-size:clamp(34px,7.5vw,46px);color:var(--gold-light);line-height:1.35;padding:0 6px;
@@ -570,6 +612,10 @@ body.raven-go .f3{animation-delay:.95s}
 @media (max-width:520px){
   .section{padding:72px 20px}
   .music-card{flex-direction:row}
+  /* the peek is narrower here — keep the arrows off the photograph */
+  .car-nav{width:36px;height:36px}
+  .car-nav.prev{left:4px}
+  .car-nav.next{right:4px}
 }
 /* on phones the RSVP QR is useless (can't scan your own screen) — show the button big instead */
 @media (max-width:767px){
@@ -631,12 +677,8 @@ body.raven-go .f3{animation-delay:.95s}
   </div>
 
   <div class="photo-frame reveal">
-    <span class="corner tl"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 38 V10 Q2 2 10 2 H38"/><path d="M8 30 Q14 22 8 14 M14 8 Q22 14 30 8" opacity=".6"/></svg></span>
-    <span class="corner tr"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 38 V10 Q2 2 10 2 H38"/><path d="M8 30 Q14 22 8 14 M14 8 Q22 14 30 8" opacity=".6"/></svg></span>
-    <span class="corner bl"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 38 V10 Q2 2 10 2 H38"/><path d="M8 30 Q14 22 8 14 M14 8 Q22 14 30 8" opacity=".6"/></svg></span>
-    <span class="corner br"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 38 V10 Q2 2 10 2 H38"/><path d="M8 30 Q14 22 8 14 M14 8 Q22 14 30 8" opacity=".6"/></svg></span>
     <div class="photo-slot">
-      <img src="assets/couple-rings.jpg" alt="Witita and Sorratat showing their engagement rings" decoding="async">
+      <img src="assets/couple-japan.jpg" alt="Witita and Sorratat in kimono during their Tokyo pre-wedding shoot" decoding="async">
     </div>
   </div>
 
@@ -796,6 +838,49 @@ body.raven-go .f3{animation-delay:.95s}
   </div>
 </section>
 
+
+<!-- ═══════════ S7 · PRE-WEDDING GALLERY ═══════════ -->
+<section class="section" id="gallery">
+  <div class="carousel reveal" id="carousel">
+
+    <div class="car-window" id="carWindow" role="group" aria-roledescription="carousel" aria-label="Pre-wedding photographs">
+      <div class="car-track" id="carTrack">
+        <div class="car-slide" role="group" aria-roledescription="slide" aria-label="Photograph 1 of 5">
+          <img src="assets/pre-1.jpg" alt="Witita and Sorratat, pre-wedding photograph 1 of 5" loading="lazy" decoding="async">
+          <div class="car-ph"><span class="ph-num">I</span><span>awaiting photograph</span><span class="ph-file">assets/pre-1.jpg</span></div>
+        </div>
+        <div class="car-slide" role="group" aria-roledescription="slide" aria-label="Photograph 2 of 5">
+          <img src="assets/pre-2.jpg" alt="Witita and Sorratat, pre-wedding photograph 2 of 5" loading="lazy" decoding="async">
+          <div class="car-ph"><span class="ph-num">II</span><span>awaiting photograph</span><span class="ph-file">assets/pre-2.jpg</span></div>
+        </div>
+        <div class="car-slide" role="group" aria-roledescription="slide" aria-label="Photograph 3 of 5">
+          <img src="assets/pre-3.jpg" alt="Witita and Sorratat, pre-wedding photograph 3 of 5" loading="lazy" decoding="async">
+          <div class="car-ph"><span class="ph-num">III</span><span>awaiting photograph</span><span class="ph-file">assets/pre-3.jpg</span></div>
+        </div>
+        <div class="car-slide" role="group" aria-roledescription="slide" aria-label="Photograph 4 of 5">
+          <img src="assets/pre-4.jpg" alt="Witita and Sorratat, pre-wedding photograph 4 of 5" loading="lazy" decoding="async">
+          <div class="car-ph"><span class="ph-num">IV</span><span>awaiting photograph</span><span class="ph-file">assets/pre-4.jpg</span></div>
+        </div>
+        <div class="car-slide" role="group" aria-roledescription="slide" aria-label="Photograph 5 of 5">
+          <img src="assets/pre-5.jpg" alt="Witita and Sorratat, pre-wedding photograph 5 of 5" loading="lazy" decoding="async">
+          <div class="car-ph"><span class="ph-num">V</span><span>awaiting photograph</span><span class="ph-file">assets/pre-5.jpg</span></div>
+        </div>
+      </div>
+      <button class="car-nav prev" id="carPrev" type="button" aria-label="Previous photograph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4 L7 12 L15 20"/></svg></button>
+      <button class="car-nav next" id="carNext" type="button" aria-label="Next photograph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 L17 12 L9 20"/></svg></button>
+    </div>
+
+    <div class="car-foot">
+      <div class="car-dots" id="carDots">
+        <button class="car-dot" type="button" aria-label="Photograph 1" aria-current="true"></button>
+        <button class="car-dot" type="button" aria-label="Photograph 2" aria-current="false"></button>
+        <button class="car-dot" type="button" aria-label="Photograph 3" aria-current="false"></button>
+        <button class="car-dot" type="button" aria-label="Photograph 4" aria-current="false"></button>
+        <button class="car-dot" type="button" aria-label="Photograph 5" aria-current="false"></button>
+      </div>
+    </div>
+  </div>
+</section>
 <!-- ═══════════ FOOTER ═══════════ -->
 <footer>
   <div class="shimmer-layer" aria-hidden="true"></div>
@@ -957,6 +1042,91 @@ function onScroll(){
 }
 addEventListener('scroll', onScroll, {passive:true});
 onScroll();
+
+/* ── PRE-WEDDING CAROUSEL ── */
+const carousel = document.getElementById('carousel');
+if(carousel){
+  const track   = document.getElementById('carTrack');
+  const win     = document.getElementById('carWindow');
+  const slides  = Array.from(track.children);
+  const dots    = Array.from(document.querySelectorAll('#carDots .car-dot'));
+  let idx = 0, timer = null, autoOn = !reduceMotion;
+
+  /* a frame whose file isn't in assets/ yet falls back to the ornate stand-in */
+  slides.forEach(s=>{
+    const img = s.querySelector('img');
+    const ok   = ()=> img.classList.add('ready');
+    const fail = ()=> s.classList.add('empty');
+    img.addEventListener('load', ok);
+    img.addEventListener('error', fail);
+    if(img.complete){ img.naturalWidth ? ok() : fail(); }
+  });
+
+  /* measured, not hard-coded, so the slide width stays a CSS decision */
+  const step = () => slides[0].offsetWidth / win.clientWidth * 100;
+  const rest = () => (100 - step()) / 2 - step() * idx;   /* offset that centres slide idx */
+  function place(dragPx){
+    track.style.transform = dragPx
+      ? 'translateX(calc(' + rest() + '% + ' + dragPx + 'px))'
+      : 'translateX(' + rest() + '%)';
+  }
+
+  function go(n, manual){
+    idx = (n + slides.length) % slides.length;
+    place();
+    slides.forEach((s,i)=> s.classList.toggle('active', i === idx));
+    dots.forEach((d,i)=> d.setAttribute('aria-current', i === idx ? 'true' : 'false'));
+    slides.forEach((s,i)=> s.setAttribute('aria-hidden', i === idx ? 'false' : 'true'));
+    if(manual) stopAuto();                 /* once they steer, we stop steering */
+  }
+  function stopAuto(){ autoOn = false; pauseAuto(); }
+  function pauseAuto(){ clearInterval(timer); timer = null; }
+  function startAuto(){ if(!autoOn || timer) return; timer = setInterval(()=>go(idx + 1), 5500); }
+
+  document.getElementById('carPrev').addEventListener('click', ()=>go(idx - 1, true));
+  document.getElementById('carNext').addEventListener('click', ()=>go(idx + 1, true));
+  dots.forEach((d,i)=> d.addEventListener('click', ()=>go(i, true)));
+  carousel.addEventListener('keydown', e=>{
+    if(e.key === 'ArrowLeft'){  e.preventDefault(); go(idx - 1, true); }
+    if(e.key === 'ArrowRight'){ e.preventDefault(); go(idx + 1, true); }
+  });
+
+  /* swipe / drag */
+  let x0 = null, dx = 0, dragged = false;
+  const px = e => (e.touches ? e.touches[0] : e).clientX;
+  function dragStart(e){ x0 = px(e); dx = 0; track.classList.add('nosnap'); win.classList.add('dragging'); }
+  function dragMove(e){
+    if(x0 === null) return;
+    dx = px(e) - x0;
+    place(dx);
+  }
+  function dragEnd(){
+    if(x0 === null) return;
+    track.classList.remove('nosnap'); win.classList.remove('dragging');
+    dragged = Math.abs(dx) > 6;                       /* tells the click handler to stand down */
+    if(Math.abs(dx) > Math.max(40, win.clientWidth * .12)) go(idx + (dx < 0 ? 1 : -1), true);
+    else go(idx);
+    x0 = null; dx = 0;
+  }
+  /* a half-seen frame beside the centre is an invitation — let it be clicked */
+  slides.forEach((s,i)=> s.addEventListener('click', ()=>{ if(!dragged && i !== idx) go(i, true); }));
+  win.addEventListener('touchstart', dragStart, {passive:true});
+  win.addEventListener('touchmove',  dragMove,  {passive:true});
+  win.addEventListener('touchend',   dragEnd);
+  win.addEventListener('mousedown',  dragStart);
+  addEventListener('mousemove', dragMove);
+  addEventListener('mouseup',   dragEnd);
+
+  /* only advance while the gallery is actually on screen */
+  new IntersectionObserver(es=>es.forEach(e=>{ e.isIntersecting ? startAuto() : pauseAuto(); }), {threshold:.35})
+    .observe(carousel);
+  carousel.addEventListener('mouseenter', pauseAuto);
+  carousel.addEventListener('mouseleave', startAuto);
+
+  addEventListener('resize', ()=>{ track.classList.add('nosnap'); place(); requestAnimationFrame(()=>track.classList.remove('nosnap')); });
+
+  go(0);
+}
 </script>
 </body>
 </html>

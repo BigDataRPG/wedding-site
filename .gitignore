@@ -25,6 +25,8 @@ npm-debug.log*
 *.md
 assets/README.txt
 assets/couple-rings-original.jpg
+assets/couple-snowboard-original.png
+assets/couple-japan-original.jpg
 google-apps-script.gs
 .vercel
 .env*

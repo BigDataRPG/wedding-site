@@ -16,18 +16,27 @@
 <meta name="twitter:image" content="https://wedding-site-rust-rho.vercel.app/assets/og-image.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Pinyon+Script&family=Sarabun:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+/* ── same token set as the invitation page, so the two read as one card ── */
 :root {
-  --crimson: #8B0000;
+  --dark: #0B0A0F;
+  --dark-2: #14111C;
+  --dark-3: #241C26;
+  --crimson: #6E1423;
+  --crimson-deep: #4A0D18;
   --crimson-light: #C41E3A;
   --gold: #C9A84C;
-  --gold-light: #E8C97A;
+  --gold-light: #E8D49A;
+  --gold-deep: #7A5A1E;
   --gold-bright: #E9C46A;
-  --ivory: #F5F0E8;
-  --dark: #0D0A0B;
-  --dark-2: #1A1418;
-  --dark-3: #241C20;
-  --muted: #9A8A92;
+  --gold-hot: #F6E3A8;
+  --gold-white: #FDF6DD;
+  --silver: #B9BEC7;
+  --ivory: #E9E2D0;
+  --muted: #9A96A5;
   --border: rgba(201,168,76,0.22);
+  --border-strong: rgba(201,168,76,0.45);
+  --gold-grad: linear-gradient(120deg,var(--gold-deep) 0%,var(--gold) 25%,var(--gold-white) 50%,var(--gold-bright) 75%,var(--gold-deep) 100%);
+  --gold-grad-lite: linear-gradient(120deg,var(--gold) 0%,var(--gold-white) 45%,var(--gold-bright) 72%,var(--gold) 100%);
   --touch: 56px;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -45,17 +54,79 @@ body {
 .bg-glow {
   position: fixed; inset: 0; pointer-events: none; z-index: 0;
   background:
-    radial-gradient(ellipse 100% 40% at 50% 0%, rgba(139,0,0,0.14) 0%, transparent 70%),
-    radial-gradient(ellipse 70% 30% at 50% 100%, rgba(139,0,0,0.07) 0%, transparent 60%);
+    radial-gradient(ellipse 90% 45% at 50% -5%, rgba(139,0,0,0.16) 0%, transparent 65%),
+    radial-gradient(ellipse 70% 35% at 50% 105%, rgba(139,0,0,0.09) 0%, transparent 60%);
 }
 .bg-vignette {
   position: fixed; inset: 0; pointer-events: none; z-index: 0;
-  box-shadow: inset 0 0 160px 50px rgba(0,0,0,0.55);
+  box-shadow: inset 0 0 180px 60px rgba(0,0,0,0.55);
+}
+.bg-grain {
+  position: fixed; inset: 0; pointer-events: none; z-index: 120;
+  opacity: 0.05; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* ── ORNAMENTS ── */
+/* ── ORNAMENTS (shared with the invitation page) ── */
 .rose-divider { display: flex; justify-content: center; margin: 16px 0 10px; }
 .rose-divider svg { width: min(260px, 72vw); height: auto; display: block; }
+
+/* shimmer bokeh field — gold/white/silver dots */
+.shimmer-layer {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    radial-gradient(2px 2px at 20% 30%, var(--gold-white) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 45% 70%, var(--gold-bright) 50%, transparent 51%),
+    radial-gradient(1px 1px at 70% 20%, var(--silver) 50%, transparent 51%),
+    radial-gradient(2.5px 2.5px at 85% 60%, var(--gold) 50%, transparent 51%),
+    radial-gradient(1px 1px at 10% 85%, var(--gold-hot) 50%, transparent 51%);
+  background-size: 220px 220px; animation: twinkle 3.4s ease-in-out infinite;
+  -webkit-mask-image: radial-gradient(ellipse 92% 82% at 50% 42%,#000 38%,transparent 78%);
+  mask-image: radial-gradient(ellipse 92% 82% at 50% 42%,#000 38%,transparent 78%);
+}
+@keyframes twinkle { 0%,100% { opacity: 0.28 } 50% { opacity: 0.65 } }
+
+/* pointed-arch row */
+.arch-row {
+  height: 14px; width: min(260px,60vw); margin: 26px auto 0; opacity: 0.5;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 14' fill='none'%3E%3Cpath d='M2 14 C2 7 6 4 12 2 C18 4 22 7 22 14' stroke='%23C9A84C' stroke-width='1'/%3E%3C/svg%3E") repeat-x center/24px 14px;
+  -webkit-mask-image: linear-gradient(90deg,transparent,#000 22% 78%,transparent);
+  mask-image: linear-gradient(90deg,transparent,#000 22% 78%,transparent);
+}
+
+/* ornamental flourish between sections */
+.flourish {
+  display: block; width: min(280px,70vw); height: 34px; margin: 30px auto; opacity: 0.85;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 280 34' fill='none'%3E%3Cpath d='M0 17 H92 M188 17 H280' stroke='%23C9A84C' stroke-width='1' opacity='.45'/%3E%3Cpath d='M100 17 c10 0 12 -10 22 -10 c7 0 9 7 2 9 c-5 1 -7 -4 -2 -6 M180 17 c-10 0 -12 -10 -22 -10 c-7 0 -9 7 -2 9 c5 1 7 -4 2 -6' stroke='%23C9A84C' stroke-width='1' opacity='.75'/%3E%3Cpath d='M140 9 l6 8 -6 8 -6 -8 Z' stroke='%23C9A84C' stroke-width='1'/%3E%3Ccircle cx='140' cy='17' r='1.6' fill='%23C9A84C'/%3E%3Ccircle cx='128' cy='17' r='1.1' fill='%23C9A84C' opacity='.7'/%3E%3Ccircle cx='152' cy='17' r='1.1' fill='%23C9A84C' opacity='.7'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+/* faint rose line-art corners */
+.rose-corner { position: absolute; width: min(118px,24vw); color: var(--gold); opacity: 0.16; pointer-events: none; z-index: 0; }
+.rose-corner svg { width: 100%; height: auto; display: block; }
+/* sit below the eyebrow so they flank the names instead of crowding the line */
+.rose-corner.tl { top: 34px; left: -16px; }
+.rose-corner.tr { top: 34px; right: -16px; transform: scaleX(-1); }
+
+/* big candle scroll progress — burns down as you fill the form */
+.candle-progress { position: fixed; left: 16px; bottom: 16px; z-index: 94; width: 22px; height: 86px; pointer-events: none; opacity: 0; transition: opacity 0.5s ease; }
+.candle-progress.show { opacity: 0.92; }
+.cp-stick {
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 12px; height: 58px; border-radius: 3px 3px 2px 2px;
+  background: linear-gradient(90deg,#241318,#3f2d34 45%,#241318);
+  box-shadow: inset 0 2px 3px rgba(233,226,208,0.14); transition: height 0.2s linear;
+}
+.cp-flame {
+  position: absolute; left: 50%; bottom: 56px; width: 10px; height: 15px; transform: translateX(-50%);
+  background: radial-gradient(circle at 50% 80%, #FDF6DD, #F6B73C 55%, transparent 78%);
+  border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%; filter: blur(0.4px);
+  animation: candleFlick 1.8s ease-in-out infinite; transition: bottom 0.2s linear;
+}
+@keyframes candleFlick {
+  0%,100% { transform: translateX(-50%) scale(1) rotate(-1.5deg); opacity: 0.92 }
+  30% { transform: translateX(-50%) scale(1.08,1.15) rotate(1deg); opacity: 1 }
+  60% { transform: translateX(-50%) scale(0.96,0.9) rotate(-0.5deg); opacity: 0.85 }
+}
 
 .page {
   position: relative; z-index: 1;
@@ -65,22 +136,32 @@ body {
 }
 
 /* ── HEADER ── */
-.header { text-align: center; margin-bottom: 44px; animation: fadeUp 1s ease both; }
+.header { position: relative; text-align: center; margin-bottom: 44px; padding-top: 8px; animation: fadeUp 1s ease both; }
 .eyebrow {
   font-family: 'Cinzel', serif; font-size: 10px;
   letter-spacing: 0.5em; color: var(--gold);
-  text-transform: uppercase; opacity: 0.75; margin-bottom: 16px;
+  text-transform: uppercase; opacity: 0.8; margin-bottom: 16px;
 }
 .names {
+  position: relative; z-index: 1;
   font-family: 'Pinyon Script', cursive;
   font-size: clamp(46px, 13vw, 72px);
-  font-weight: 400; color: var(--ivory);
+  font-weight: 400;
   line-height: 1.25; letter-spacing: 0; margin: 10px 0; padding: 0 6px;
+  background: var(--gold-grad); background-size: 200% auto;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: var(--gold);
+  animation: goldSweep 6s ease-in-out 1.2s infinite;
 }
-.names em { color: var(--gold-light); font-style: normal; }
+@keyframes goldSweep { to { background-position: 200% center } }
+.names em { font-style: normal; }
 .divider { display: flex; align-items: center; gap: 12px; margin: 14px 0; color: var(--gold); opacity: 0.45; font-size: 13px; }
 .divider::before, .divider::after { content: ''; flex: 1; height: 0.5px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
-.date-stamp { font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 0.4em; color: var(--gold); opacity: 0.85; }
+.date-stamp {
+  font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 0.5em; text-indent: 0.5em;
+  background: var(--gold-grad-lite); -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: var(--gold);
+}
 .event-start { font-family: 'Sarabun', sans-serif; font-size: 14px; letter-spacing: 0; color: var(--ivory); opacity: 0.72; margin-top: 8px; }
 .deadline-note {
   display: inline-block; margin-top: 12px;
@@ -111,25 +192,28 @@ body {
   letter-spacing: 0.35em; text-transform: uppercase; color: var(--muted);
 }
 
-/* ── CARD ── */
+/* ── CARD · the gcard frame from the invitation ── */
 .card {
-  background: var(--dark-2); border: 0.5px solid var(--border);
-  border-radius: 4px; padding: 28px 24px; margin-bottom: 0;
+  background: linear-gradient(160deg, #16131F, #0B0A0F);
+  border: 1px solid var(--border);
+  border-radius: 4px; padding: 30px 26px; margin-bottom: 0;
   position: relative; animation: fadeUp 0.6s ease both;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.55), inset 0 1px 0 rgba(253,246,221,0.06);
 }
 .card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(201,168,76,0.45), transparent);
+  content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
 }
 .card::after {
-  content: ''; position: absolute; inset: 5px; pointer-events: none;
-  border: 1px solid rgba(201,168,76,0.10); border-radius: 2px;
+  content: ''; position: absolute; inset: 6px; pointer-events: none;
+  border: 1px solid rgba(201,168,76,0.14); border-radius: 2px;
 }
 .card-title {
   font-family: 'Cinzel', serif; font-size: 10px;
   letter-spacing: 0.45em; text-transform: uppercase;
-  color: var(--gold); opacity: 0.75; margin-bottom: 24px;
+  color: var(--gold); opacity: 0.75; margin-bottom: 22px;
 }
+.card-title .cx { color: var(--gold-light); }
 
 /* ── FIELDS ── */
 .field { margin-bottom: 20px; }
@@ -251,17 +335,20 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.65; }
 .submit-wrap { margin-top: 20px; }
 .submit-btn {
   width: 100%;
-  background: linear-gradient(135deg, #8B0000 0%, #5C0000 100%);
-  border: 1px solid rgba(201,168,76,0.3);
+  background: linear-gradient(135deg, var(--crimson) 0%, var(--crimson-deep) 100%);
+  border: 1px solid var(--border-strong);
   color: var(--gold-light); font-family: 'Cinzel', serif;
   font-size: 13px; letter-spacing: 0.4em; text-transform: uppercase;
-  padding: 0 20px; border-radius: 4px; cursor: pointer;
-  min-height: 60px; transition: all 0.35s;
+  padding: 0 20px; border-radius: 3px; cursor: pointer;
+  min-height: 60px; transition: all 0.3s;
   display: flex; align-items: center; justify-content: center; gap: 10px;
 }
 .submit-btn:active { transform: scale(0.98); }
 .submit-btn:disabled { opacity: 0.45; cursor: not-allowed; }
-.submit-btn:not(:disabled):hover { background: linear-gradient(135deg, #C41E3A 0%, #8B0000 100%); }
+.submit-btn:not(:disabled):hover {
+  background: linear-gradient(135deg, var(--crimson-light) 0%, var(--crimson) 100%);
+  box-shadow: 0 0 24px rgba(139,0,0,0.5);
+}
 
 .foot-note { margin-top: 20px; text-align: center; font-size: 14px; font-style: italic; color: var(--muted); line-height: 1.7; }
 
@@ -274,22 +361,50 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.65; }
 
 /* ── SUCCESS ── */
 .success-screen {
-  display: none; text-align: center; padding: 60px 20px 40px;
+  display: none; position: relative; text-align: center; padding: 60px 20px 40px;
   animation: fadeUp 0.8s ease both;
 }
 .success-screen.show { display: block; }
+/* the same blob of wax that sealed the invitation — now broken, on your behalf */
 .success-glyph {
-  width: 84px; height: 84px; border-radius: 50%; margin: 0 auto 24px;
-  background: radial-gradient(circle at 34% 30%, #C41E3A 0%, #8B0000 45%, #4E0208 100%);
-  box-shadow: 0 4px 14px rgba(0,0,0,0.55), inset 0 2px 5px rgba(255,255,255,0.18), inset 0 -4px 8px rgba(0,0,0,0.45);
-  display: flex; align-items: center; justify-content: center; position: relative;
-  font-family: 'Cinzel', serif; font-size: 22px; color: rgba(245,240,232,0.92);
-  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+  width: 96px; height: 96px; margin: 0 auto 26px;
+  border-radius: 48% 53% 46% 54% / 54% 46% 55% 45%;
+  transform: rotate(-4deg);
+  background: radial-gradient(circle at 33% 26%, #D42C42 0%, #A31226 34%, #780C18 66%, #4E0208 100%);
+  box-shadow:
+    0 10px 20px rgba(0,0,0,0.55), 0 3px 5px rgba(0,0,0,0.4),
+    inset 0 4px 7px rgba(255,255,255,0.34),
+    inset 0 -7px 13px rgba(45,0,3,0.6),
+    inset 0 0 0 1px rgba(255,255,255,0.07);
+  display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;
+  font-family: 'Cinzel', serif; font-weight: 600; letter-spacing: 0.06em;
+  font-size: 21px; color: rgba(245,240,232,0.92);
+  text-shadow: 0 1px 2px rgba(50,0,4,0.75), 0 -1px 1px rgba(255,255,255,0.16);
 }
-.success-glyph::before { content: ''; position: absolute; inset: 8px; border-radius: 50%; border: 1.5px solid rgba(245,240,232,0.28); }
+.success-glyph::before {
+  content: ''; position: absolute; inset: 11%; border-radius: inherit;
+  border: 1.5px solid rgba(245,240,232,0.30);
+  box-shadow: inset 0 2px 5px rgba(45,0,3,0.5), 0 1px 1px rgba(255,255,255,0.12);
+}
+.success-glyph::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background:
+    radial-gradient(circle at 72% 78%, rgba(0,0,0,0.34) 0 16%, transparent 42%),
+    radial-gradient(circle at 20% 68%, rgba(255,255,255,0.10) 0 10%, transparent 28%),
+    radial-gradient(circle at 80% 22%, rgba(0,0,0,0.20) 0 10%, transparent 28%);
+  mix-blend-mode: overlay;
+}
 /* never uppercase the hashtag — the camelCase is what makes it readable */
 .success-hashtag { margin-top: 28px; font-family: 'Cinzel', serif; font-weight: 600; font-size: 15px; letter-spacing: 0.18em; color: var(--gold-bright); text-shadow: 0 0 24px rgba(233,196,106,0.35); }
-.foot-motto { margin-top: 6px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px; color: var(--gold-light); opacity: 0.85; text-align: center; }
+.foot-motto {
+  margin-top: 14px; font-family: 'Pinyon Script', cursive; font-style: normal;
+  font-size: clamp(28px, 7vw, 36px); line-height: 1.35; color: var(--gold-light);
+  text-align: center; text-shadow: 0 0 26px rgba(201,168,76,0.28);
+}
+.success-hashtag {
+  display: inline-block; padding-bottom: 7px;
+  border-bottom: 1px solid rgba(201,164,76,0.4);
+}
 .success-title { font-family: 'Cinzel', serif; font-size: clamp(24px, 6vw, 30px); letter-spacing: 0.12em; color: var(--ivory); margin-bottom: 12px; }
 .success-body { font-size: 18px; font-style: italic; color: var(--muted); line-height: 1.75; }
 
@@ -314,9 +429,14 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.65; }
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
+  html { scroll-behavior: auto; }
+}
+
 @media (max-width: 380px) {
   .page { padding: 36px 16px 64px; }
-  .card { padding: 22px 16px; }
+  .card { padding: 24px 18px; }
   .attend-btn .attend-icon { font-size: 18px; }
   .two-col { grid-template-columns: 1fr; }
   .guest-row-inner { grid-template-columns: 1fr; }
@@ -365,11 +485,15 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.65; }
 <body>
 <div class="bg-glow"></div>
 <div class="bg-vignette"></div>
+<div class="bg-grain" aria-hidden="true"></div>
 
 <div class="page">
 
 <!-- HEADER -->
 <header class="header">
+  <span class="rose-corner tl" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M20 18 C24 8 38 6 44 14 C50 22 44 34 34 34 C26 34 20 28 22 21"/><path d="M34 28 c-6 -1 -7 -9 -1 -11 c5 -2 9 3 6 7 c-2 3 -6 2 -6 -1"/><path d="M34 36 C40 56 34 74 18 94"/><path d="M31 50 l-7 -3 M33 62 l7 3 M26 76 l-6 -2"/><path d="M38 58 q12 -4 14 -16 q-12 4 -14 16 Z"/></svg></span>
+  <span class="rose-corner tr" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M20 18 C24 8 38 6 44 14 C50 22 44 34 34 34 C26 34 20 28 22 21"/><path d="M34 28 c-6 -1 -7 -9 -1 -11 c5 -2 9 3 6 7 c-2 3 -6 2 -6 -1"/><path d="M34 36 C40 56 34 74 18 94"/><path d="M31 50 l-7 -3 M33 62 l7 3 M26 76 l-6 -2"/><path d="M38 58 q12 -4 14 -16 q-12 4 -14 16 Z"/></svg></span>
+  <div class="shimmer-layer" aria-hidden="true"></div>
   <p class="eyebrow">You are cordially invited</p>
   <h1 class="names">Witita<br><em>&amp; Sorratat</em></h1>
   <div class="rose-divider">
@@ -384,6 +508,7 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.65; }
   <p class="event-start">งานแต่งงานเริ่มวันที่</p>
   <p class="date-stamp">12 · 12 · 2026</p>
   <p class="deadline-note">กรุณาตอบรับภายใน 15 พฤศจิกายน 2569</p>
+  <div class="arch-row" aria-hidden="true"></div>
 </header>
 
 <!-- FORM -->
@@ -490,20 +615,27 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.65; }
   </div>
 
   <p class="foot-note">ข้อมูลของท่านจะถูกใช้เพื่อการจัดเตรียมงานเท่านั้น<br>หากมีข้อสงสัย ติดต่อ Boyd &amp; Aey ได้โดยตรง</p>
-  <p class="foot-motto">"Till Death Do Us Part"</p>
-  <p class="success-hashtag" style="text-align:center">#AeyBoydTillDeath</p>
+  <span class="flourish" aria-hidden="true"></span>
+  <p class="foot-motto">Till Death Do Us Part</p>
+  <p style="text-align:center"><span class="success-hashtag">#AeyBoydTillDeath</span></p>
+  <div class="arch-row" aria-hidden="true"></div>
 </div>
 
 <!-- SUCCESS -->
 <div class="success-screen" id="successScreen">
+  <div class="shimmer-layer" aria-hidden="true"></div>
   <div class="success-glyph">W·S</div>
   <h2 class="success-title">ขอบพระคุณ</h2>
-  <div class="divider" style="margin:18px 0;">✦</div>
+  <span class="flourish" aria-hidden="true" style="margin:18px auto"></span>
   <p class="success-body" id="successBody"></p>
-  <p class="success-hashtag">#AeyBoydTillDeath</p>
+  <p class="foot-motto">Till Death Do Us Part</p>
+  <p><span class="success-hashtag">#AeyBoydTillDeath</span></p>
+  <div class="arch-row" aria-hidden="true"></div>
 </div>
 
 </div><!-- /page -->
+
+<div class="candle-progress" id="candleProgress" aria-hidden="true"><div class="cp-stick" id="cpStick"></div><div class="cp-flame" id="cpFlame"></div></div>
 
 <script>
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyFXrl3Npb0xU5E0CZj2LkLPrkPrI23EcmOZYbQSBOf37sqS-emOHbo7xrMhuU5mFyg/exec';
@@ -631,6 +763,20 @@ function showError(msg) {
   el.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 function hideError() { document.getElementById('errorBanner').style.display = 'none'; }
+
+/* ── BIG CANDLE SCROLL PROGRESS (same as the invitation page) ── */
+const cp = document.getElementById('candleProgress');
+const cpStick = document.getElementById('cpStick');
+const cpFlame = document.getElementById('cpFlame');
+function onScroll() {
+  const prog = Math.min(1, Math.max(0, scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight)));
+  const h = Math.round(58 - prog * 48);
+  cpStick.style.height = h + 'px';
+  cpFlame.style.bottom = (h - 2) + 'px';
+  cp.classList.toggle('show', scrollY > 40);
+}
+addEventListener('scroll', onScroll, { passive: true });
+onScroll();
 
 /* ── already-submitted guard ── */
 window.addEventListener('DOMContentLoaded', () => {
