@@ -72,6 +72,8 @@ body.gated{overflow:hidden;height:100vh}
 .sec-title{font-family:'Cinzel Decorative',serif;font-size:clamp(24px,5.6vw,36px);font-weight:400;text-align:center;margin:16px 0 10px;line-height:1.3;
   background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:var(--gold-light)}
 .sec-sub{font-style:italic;color:var(--muted);text-align:center;font-size:17px}
+/* the hours in figures — same 24h clock the timeline uses */
+.time-range{font-family:'Cinzel',serif;font-style:normal;font-size:21px;letter-spacing:.26em;color:var(--gold-light)}
 .center{text-align:center}
 
 /* thorn-rose divider */
@@ -373,6 +375,25 @@ body.gated{overflow:hidden;height:100vh}
 .count-num.tick{animation:numTick .45s ease}
 @keyframes numTick{0%{opacity:.15;transform:translateY(-26%)}100%{opacity:1;transform:none}}
 .cal-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:36px}
+
+/* ════════════════════ S2b · INTERLUDE ════════════════════ */
+/* a full-bleed breath between the date and the evening — no words, just the two of them */
+.interlude{position:relative;z-index:1;margin:34px 0}
+.il-frame{position:relative;overflow:hidden;aspect-ratio:37/20;background:var(--dark-2)}
+.il-frame img{width:100%;height:100%;object-fit:cover;display:block}
+/* the photograph is broad daylight — these pull it back toward the invitation's night */
+.il-frame::after{content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(to bottom, var(--dark) 0%, rgba(11,10,15,.30) 14%, rgba(11,10,15,.06) 50%, rgba(11,10,15,.34) 86%, var(--dark) 100%),
+    linear-gradient(to right, var(--dark) 0%, transparent 9%, transparent 91%, var(--dark) 100%),
+    radial-gradient(ellipse 118% 78% at 50% 48%, transparent 38%, rgba(11,10,15,.5) 100%);
+}
+/* hairlines in the same metal as every other edge on the page */
+.il-rule{position:absolute;left:0;right:0;height:1px;z-index:2;
+  background:linear-gradient(90deg,transparent,var(--border-strong) 24%,var(--border-strong) 76%,transparent)}
+.il-rule.top{top:0}.il-rule.bot{bottom:0}
+/* narrow screens: stand the band up a little so the two of them keep some presence */
+@media(max-width:640px){.il-frame{aspect-ratio:16/10}}
 
 /* ════════════════════ S3 · MUSIC & TIMELINE ════════════════════ */
 .music-card{display:flex;align-items:center;gap:16px;max-width:380px;margin:30px auto 46px;padding:14px 20px}
@@ -678,7 +699,7 @@ body.raven-go .f3{animation-delay:.95s}
 
   <div class="photo-frame reveal">
     <div class="photo-slot">
-      <img src="assets/couple-japan.jpg" alt="Witita and Sorratat in kimono during their Tokyo pre-wedding shoot" decoding="async">
+      <img src="assets/couple-hero.jpg" alt="Witita and Sorratat, forehead to forehead in tuxedo and gown" decoding="async">
     </div>
   </div>
 
@@ -689,7 +710,7 @@ body.raven-go .f3{animation-delay:.95s}
   <div class="reveal center">
     <p class="eyebrow">Save the Date</p>
     <h2 class="sec-title">Saturday, 12 December 2026</h2>
-    <p class="sec-sub">Fifteen o'clock until ten in the evening</p>
+    <p class="sec-sub time-range">15:00 &ndash; 22:00</p>
   </div>
 
   <div class="calendar gcard reveal">
@@ -720,6 +741,15 @@ body.raven-go .f3{animation-delay:.95s}
        href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding+of+Witita+%26+Sorratat&dates=20261212T080000Z/20261212T150000Z&details=Gothic+Romance+Wedding+%23AeyBoydTillDeath&location=St.+Tropez+Hall+1,+Ratchaphruek+Rd,+Pakkret,+Nonthaburi">
        Google Calendar</a>
     <a class="btn btn-ghost" id="icsBtn" href="assets/witita-sorratat-wedding.ics" download="Witita-Sorratat-Wedding.ics">Download .ics</a>
+  </div>
+</section>
+
+<!-- ═══════════ S2b · INTERLUDE ═══════════ -->
+<section class="interlude reveal" id="interlude" aria-label="Witita and Sorratat at the villa colonnade">
+  <div class="il-frame">
+    <img src="assets/interlude.jpg" alt="Witita and Sorratat standing between stone columns in a garden colonnade" loading="lazy" decoding="async">
+    <span class="il-rule top" aria-hidden="true"></span>
+    <span class="il-rule bot" aria-hidden="true"></span>
   </div>
 </section>
 
@@ -846,23 +876,23 @@ body.raven-go .f3{animation-delay:.95s}
     <div class="car-window" id="carWindow" role="group" aria-roledescription="carousel" aria-label="Pre-wedding photographs">
       <div class="car-track" id="carTrack">
         <div class="car-slide" role="group" aria-roledescription="slide" aria-label="Photograph 1 of 5">
-          <img src="assets/pre-1.jpg" alt="Witita and Sorratat, pre-wedding photograph 1 of 5" loading="lazy" decoding="async">
+          <img src="assets/pre-1.jpg" alt="Witita and Sorratat cheek to cheek in white tuxedo and gown" loading="lazy" decoding="async">
           <div class="car-ph"><span class="ph-num">I</span><span>awaiting photograph</span><span class="ph-file">assets/pre-1.jpg</span></div>
         </div>
         <div class="car-slide" role="group" aria-roledescription="slide" aria-label="Photograph 2 of 5">
-          <img src="assets/pre-2.jpg" alt="Witita and Sorratat, pre-wedding photograph 2 of 5" loading="lazy" decoding="async">
+          <img src="assets/pre-2.jpg" alt="Witita and Sorratat holding their wedding rings up to one eye, by the sea" loading="lazy" decoding="async">
           <div class="car-ph"><span class="ph-num">II</span><span>awaiting photograph</span><span class="ph-file">assets/pre-2.jpg</span></div>
         </div>
         <div class="car-slide" role="group" aria-roledescription="slide" aria-label="Photograph 3 of 5">
-          <img src="assets/pre-3.jpg" alt="Witita and Sorratat, pre-wedding photograph 3 of 5" loading="lazy" decoding="async">
+          <img src="assets/pre-3.jpg" alt="Witita and Sorratat in kimono at a Tokyo temple gate" loading="lazy" decoding="async">
           <div class="car-ph"><span class="ph-num">III</span><span>awaiting photograph</span><span class="ph-file">assets/pre-3.jpg</span></div>
         </div>
         <div class="car-slide" role="group" aria-roledescription="slide" aria-label="Photograph 4 of 5">
-          <img src="assets/pre-4.jpg" alt="Witita and Sorratat, pre-wedding photograph 4 of 5" loading="lazy" decoding="async">
+          <img src="assets/pre-4.jpg" alt="Witita and Sorratat hand in hand beneath cherry blossom in Japan" loading="lazy" decoding="async">
           <div class="car-ph"><span class="ph-num">IV</span><span>awaiting photograph</span><span class="ph-file">assets/pre-4.jpg</span></div>
         </div>
         <div class="car-slide" role="group" aria-roledescription="slide" aria-label="Photograph 5 of 5">
-          <img src="assets/pre-5.jpg" alt="Witita and Sorratat, pre-wedding photograph 5 of 5" loading="lazy" decoding="async">
+          <img src="assets/pre-5.jpg" alt="Witita and Sorratat playing on the shore at sunset" loading="lazy" decoding="async">
           <div class="car-ph"><span class="ph-num">V</span><span>awaiting photograph</span><span class="ph-file">assets/pre-5.jpg</span></div>
         </div>
       </div>

@@ -24,9 +24,7 @@ npm-debug.log*
 # Local docs (keep all .md notes out of the repo)
 *.md
 assets/README.txt
-assets/couple-rings-original.jpg
-assets/couple-snowboard-original.png
-assets/couple-japan-original.jpg
+assets/*-original.*
 google-apps-script.gs
 .vercel
 .env*
