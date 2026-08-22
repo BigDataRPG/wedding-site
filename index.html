@@ -71,6 +71,15 @@ body.gated{overflow:hidden;height:100vh}
 .section{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:96px 24px}
 .sec-title{font-family:'Cinzel Decorative',serif;font-size:clamp(24px,5.6vw,36px);font-weight:400;text-align:center;margin:16px 0 10px;line-height:1.3;
   background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:var(--gold-light)}
+/* the day pulled out of the line so it echoes the calendar cell below */
+.sec-title .date-num{
+  display:inline-block;font-size:1.38em;font-weight:700;line-height:.85;
+  vertical-align:-.045em;padding:0 .03em;
+  background:linear-gradient(180deg,#FDF6DD 0%,#F6E3A8 36%,#C9A84C 72%,#F3DDA0 100%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+  filter:drop-shadow(0 0 16px rgba(233,196,106,.45));
+}
 .sec-sub{font-style:italic;color:var(--muted);text-align:center;font-size:17px}
 /* the hours in figures — same 24h clock the timeline uses */
 .time-range{font-family:'Cinzel',serif;font-style:normal;font-size:21px;letter-spacing:.26em;color:var(--gold-light)}
@@ -722,7 +731,7 @@ body.raven-go .f3{animation-delay:.95s}
 <section class="section" id="save-the-date">
   <div class="reveal center">
     <p class="eyebrow">Save the Date</p>
-    <h2 class="sec-title">Saturday, 12 December 2026</h2>
+    <h2 class="sec-title">Saturday, <span class="date-num">12</span> December 2026</h2>
     <p class="sec-sub time-range">15:00 &ndash; 22:00</p>
   </div>
 
