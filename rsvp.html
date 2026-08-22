@@ -442,40 +442,59 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.65; }
   .guest-row-inner { grid-template-columns: 1fr; }
 }
 
+/* ── LANGUAGE SWITCH ── */
+.lang-switch { display: flex; justify-content: flex-end; margin-bottom: 20px; }
+.lang-pill {
+  display: inline-flex; background: var(--dark-2);
+  border: 1px solid var(--border); border-radius: 40px; overflow: hidden;
+}
+.lang-btn {
+  font-family: 'Cinzel', serif; font-size: 11px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  background: transparent; border: 0; color: var(--muted);
+  padding: 9px 17px; min-height: 36px; line-height: 1; cursor: pointer;
+  transition: background 0.22s, color 0.22s;
+}
+/* Cinzel carries no Thai glyphs — the Thai label needs its own face */
+.lang-btn[data-lang="th"] { font-family: 'Sarabun', sans-serif; font-size: 13px; letter-spacing: 0; }
+.lang-btn[aria-pressed="true"] { background: rgba(201,168,76,0.12); color: var(--gold-light); }
+.lang-btn:active { transform: scale(0.97); }
+
 /* ── THAI TEXT OVERRIDE ──
    letter-spacing แยกสระ/วรรณยุกต์ออกจากพยัญชนะ → ต้องเป็น 0 เสมอ
-   Cinzel เป็น Latin-only font → ใช้ Sarabun แทนสำหรับ label ภาษาไทย */
-.deadline-note {
+   Cinzel เป็น Latin-only font → ใช้ Sarabun แทนสำหรับ label ภาษาไทย
+   ผูกไว้กับ html[lang="th"] เพื่อให้โหมดอังกฤษกลับไปใช้ Cinzel ตามดีไซน์เดิม */
+html[lang="th"] .deadline-note {
   letter-spacing: 0;
   font-style: normal;
 }
-.card-title {
+html[lang="th"] .card-title {
   font-family: 'Sarabun', sans-serif;
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.04em;
   text-transform: none;
 }
-.field-label {
+html[lang="th"] .field-label {
   font-family: 'Sarabun', sans-serif;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0;
   text-transform: none;
 }
-.attend-btn {
+html[lang="th"] .attend-btn {
   font-family: 'Sarabun', sans-serif;
   font-size: 15px;
   letter-spacing: 0;
   text-transform: none;
 }
-.submit-btn {
+html[lang="th"] .submit-btn {
   font-family: 'Sarabun', sans-serif;
   font-size: 17px;
   letter-spacing: 0;
   text-transform: none;
 }
-.add-btn {
+html[lang="th"] .add-btn {
   font-family: 'Sarabun', sans-serif;
   letter-spacing: 0;
   text-transform: none;
@@ -488,6 +507,14 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.65; }
 <div class="bg-grain" aria-hidden="true"></div>
 
 <div class="page">
+
+<!-- LANGUAGE -->
+<div class="lang-switch">
+  <div class="lang-pill" role="group" aria-label="Language / ภาษา">
+    <button type="button" class="lang-btn" data-lang="th" aria-pressed="true" onclick="setLang('th')">ไทย</button>
+    <button type="button" class="lang-btn" data-lang="en" aria-pressed="false" onclick="setLang('en')">EN</button>
+  </div>
+</div>
 
 <!-- HEADER -->
 <header class="header">
@@ -505,9 +532,9 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.65; }
       <path d="M132 24 q-5 4 -10 3 M148 24 q5 4 10 3" stroke="#5c3a1e" stroke-width="1.2" opacity=".8"/>
     </svg>
   </div>
-  <p class="event-start">งานแต่งงานเริ่มวันที่</p>
+  <p class="event-start" data-en="The wedding begins on">งานแต่งงานเริ่มวันที่</p>
   <p class="date-stamp">12 · 12 · 2026</p>
-  <p class="deadline-note">กรุณาตอบรับภายใน 15 พฤศจิกายน 2569</p>
+  <p class="deadline-note" data-en="Kindly reply by 15 November 2026">กรุณาตอบรับภายใน 15 พฤศจิกายน 2569</p>
   <div class="arch-row" aria-hidden="true"></div>
 </header>
 
@@ -516,52 +543,49 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.65; }
 
   <!-- STEP 1: ATTENDANCE + INFO -->
   <div class="card" id="step1Card">
-    <p class="card-title">✦ &nbsp; ยืนยันการเข้าร่วม</p>
+    <p class="card-title" data-en="✦ &nbsp; Attendance">✦ &nbsp; ยืนยันการเข้าร่วม</p>
 
     <div class="field">
-      <div class="field-label">ท่านสามารถมาร่วมงานได้หรือไม่ <span class="req">*</span></div>
+      <div class="field-label" data-en="Will you be able to join us? <span class='req'>*</span>">ท่านสามารถมาร่วมงานได้หรือไม่ <span class="req">*</span></div>
       <div class="attend-grid">
-        <button class="attend-btn" id="btnYes" onclick="setAttend(true)">
+        <button class="attend-btn" id="btnYes" onclick="setAttend(true)" data-en="<span class='attend-icon'>🕯️</span>Joyfully accept">
           <span class="attend-icon">🕯️</span>ยินดีมาร่วม
         </button>
-        <button class="attend-btn" id="btnNo" onclick="setAttend(false)">
+        <button class="attend-btn" id="btnNo" onclick="setAttend(false)" data-en="<span class='attend-icon'>🙏</span>Regretfully decline">
           <span class="attend-icon">🙏</span>ขออภัย ไม่สะดวก
         </button>
       </div>
     </div>
 
     <div class="field">
-      <div class="field-label">ชื่อ-นามสกุล <span class="req">*</span></div>
-      <input type="text" id="mainName" placeholder="ชื่อของท่าน…" autocomplete="name" autocorrect="off">
+      <div class="field-label" data-en="Full name <span class='req'>*</span>">ชื่อ-นามสกุล <span class="req">*</span></div>
+      <input type="text" id="mainName" data-en-ph="Your name…" placeholder="ชื่อของท่าน…" autocomplete="name" autocorrect="off">
     </div>
 
     <div class="field">
-      <div class="field-label">ชื่อเล่น</div>
-      <input type="text" id="nickname" placeholder="ชื่อเล่นของท่าน…" autocorrect="off">
+      <div class="field-label" data-en="Nickname">ชื่อเล่น</div>
+      <input type="text" id="nickname" data-en-ph="Your nickname…" placeholder="ชื่อเล่นของท่าน…" autocorrect="off">
     </div>
 
     <div class="field">
-      <div class="field-label">
+      <div class="field-label" data-en="Phone number <span class='req'>*</span> <span class='hint'>guards against duplicate entries</span>">
         เบอร์โทรศัพท์ <span class="req">*</span>
         <span class="hint">ใช้ป้องกันข้อมูลซ้ำ</span>
       </div>
       <input type="tel" id="phone" placeholder="0XX-XXX-XXXX" autocomplete="tel" inputmode="tel">
-      <div class="duplicate-notice" id="dupNotice">
-        📋 พบข้อมูลของท่านในระบบแล้ว — การส่งนี้จะ<strong>อัปเดต</strong>ข้อมูลเดิมให้อัตโนมัติ
-      </div>
+      <!-- filled from STR, so each wording lives in exactly one place -->
+      <div class="duplicate-notice" id="dupNotice"></div>
     </div>
 
     <div class="field">
-      <div class="field-label">ความสัมพันธ์กับเจ้าภาพ <span class="req">*</span></div>
+      <div class="field-label" data-en="Whose guest are you? <span class='req'>*</span>">ความสัมพันธ์กับเจ้าภาพ <span class="req">*</span></div>
+      <!-- data-val stays Thai: it is what lands in the hosts' sheet, whichever language is showing -->
       <div class="chips" id="relationChips">
-        <span class="chip" data-val="เพื่อนเจ้าบ่าว" onclick="pickRelation(this)">เพื่อนเจ้าบ่าว</span>
-        <span class="chip" data-val="เพื่อนเจ้าสาว" onclick="pickRelation(this)">เพื่อนเจ้าสาว</span>
-        <span class="chip" data-val="ญาติฝั่งเจ้าบ่าว" onclick="pickRelation(this)">ญาติฝั่งเจ้าบ่าว</span>
-        <span class="chip" data-val="ญาติฝั่งเจ้าสาว" onclick="pickRelation(this)">ญาติฝั่งเจ้าสาว</span>
-        <span class="chip" data-val="เพื่อนร่วมงาน" onclick="pickRelation(this)">เพื่อนร่วมงาน</span>
-        <span class="chip" data-val="อื่นๆ" onclick="pickRelation(this)">อื่นๆ</span>
+        <span class="chip" data-val="แขกฝั่งเจ้าบ่าว" data-en="Groom's guest" onclick="pickRelation(this)">แขกฝั่งเจ้าบ่าว</span>
+        <span class="chip" data-val="แขกฝั่งเจ้าสาว" data-en="Bride's guest" onclick="pickRelation(this)">แขกฝั่งเจ้าสาว</span>
+        <span class="chip" data-val="อื่นๆ" data-en="Other" onclick="pickRelation(this)">อื่นๆ</span>
       </div>
-      <input type="text" id="relationCustom" placeholder="หรือพิมพ์ระบุเอง…" style="margin-top:10px" oninput="clearRelation()" autocorrect="off">
+      <input type="text" id="relationCustom" data-en-ph="Or type it yourself…" placeholder="หรือพิมพ์ระบุเอง…" style="margin-top:10px" oninput="clearRelation()" autocorrect="off">
     </div>
   </div>
 
@@ -569,10 +593,10 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.65; }
   <div id="guestSection" class="hidden">
     <div class="section-gap"></div>
     <div class="card">
-      <p class="card-title">✦ &nbsp; จำนวนผู้เข้าร่วม</p>
+      <p class="card-title" data-en="✦ &nbsp; Number of guests">✦ &nbsp; จำนวนผู้เข้าร่วม</p>
 
       <div class="field">
-        <div class="field-label">จำนวนคนทั้งหมดที่จะมา <span class="req">*</span></div>
+        <div class="field-label" data-en="Total attending <span class='req'>*</span>">จำนวนคนทั้งหมดที่จะมา <span class="req">*</span></div>
         <div class="stepper-row">
           <button class="stepper-btn" onclick="adjustCount(-1)">−</button>
           <div class="stepper-val" id="countDisplay">1</div>
@@ -582,7 +606,7 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.65; }
       </div>
 
       <div class="field">
-        <div class="field-label">ในจำนวนนั้น เป็นเด็ก <span style="font-family:'Cormorant Garamond',serif;font-size:13px;font-style:italic;letter-spacing:0;text-transform:none;">(อายุต่ำกว่า 12 ปี)</span></div>
+        <div class="field-label" data-en="Of those, children <span style='font-family:Cormorant Garamond,serif;font-size:13px;font-style:italic;letter-spacing:0;text-transform:none;'>(under 12 years)</span>">ในจำนวนนั้น เป็นเด็ก <span style="font-family:'Cormorant Garamond',serif;font-size:13px;font-style:italic;letter-spacing:0;text-transform:none;">(อายุต่ำกว่า 12 ปี)</span></div>
         <div class="stepper-row">
           <button class="stepper-btn" onclick="adjustChild(-1)">−</button>
           <div class="stepper-val" id="childDisplay">0</div>
@@ -600,21 +624,19 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.65; }
   <!-- MESSAGE (always shown) -->
   <div class="section-gap"></div>
   <div class="card">
-    <p class="card-title">✦ &nbsp; ข้อความถึงเจ้าภาพ</p>
+    <p class="card-title" data-en="✦ &nbsp; A note to the hosts">✦ &nbsp; ข้อความถึงเจ้าภาพ</p>
     <div class="field" style="margin-bottom:0">
-      <textarea id="message" placeholder="ข้อความแสดงความยินดี หรือแจ้งข้อมูลเพิ่มเติม… (ไม่บังคับ)"></textarea>
+      <textarea id="message" data-en-ph="Congratulations, or anything we should know… (optional)" placeholder="ข้อความแสดงความยินดี หรือแจ้งข้อมูลเพิ่มเติม… (ไม่บังคับ)"></textarea>
     </div>
   </div>
 
   <div class="error-banner" id="errorBanner"></div>
 
   <div class="submit-wrap">
-    <button class="submit-btn" id="submitBtn" onclick="submitRSVP()">
-      ยืนยันการตอบรับ
-    </button>
+    <button class="submit-btn" id="submitBtn" onclick="submitRSVP()" data-en="Send my response">ยืนยันการตอบรับ</button>
   </div>
 
-  <p class="foot-note">ข้อมูลของท่านจะถูกใช้เพื่อการจัดเตรียมงานเท่านั้น<br>หากมีข้อสงสัย ติดต่อ Boyd &amp; Aey ได้โดยตรง</p>
+  <p class="foot-note" data-en="Your details are used only to prepare for the day.<br>Any questions, please reach Boyd &amp; Aey directly.">ข้อมูลของท่านจะถูกใช้เพื่อการจัดเตรียมงานเท่านั้น<br>หากมีข้อสงสัย ติดต่อ Boyd &amp; Aey ได้โดยตรง</p>
   <span class="flourish" aria-hidden="true"></span>
   <p class="foot-motto">Till Death Do Us Part</p>
   <p style="text-align:center"><span class="success-hashtag">#AeyBoydTillDeath</span></p>
@@ -625,7 +647,7 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.65; }
 <div class="success-screen" id="successScreen">
   <div class="shimmer-layer" aria-hidden="true"></div>
   <div class="success-glyph">W·S</div>
-  <h2 class="success-title">ขอบพระคุณ</h2>
+  <h2 class="success-title" data-en="Thank you">ขอบพระคุณ</h2>
   <span class="flourish" aria-hidden="true" style="margin:18px auto"></span>
   <p class="success-body" id="successBody"></p>
   <p class="foot-motto">Till Death Do Us Part</p>
@@ -644,6 +666,66 @@ let attending = null;
 let relation = '';
 let totalGuests = 1;
 let childGuests = 0;
+let successName = '';
+
+/* ── LANGUAGE ──
+   Static text carries data-en / data-en-ph in the markup and its Thai original is
+   captured into data-th on boot, so no Thai string is written twice. Only wording
+   that JavaScript builds at runtime lives here. */
+const STR = {
+  th: {
+    sending: 'กำลังส่งข้อมูล…',
+    errAttend: 'กรุณาเลือกว่าจะเข้าร่วมงานหรือไม่',
+    errName: 'กรุณากรอกชื่อ-นามสกุลของท่าน',
+    errPhone: 'กรุณากรอกเบอร์โทรศัพท์ให้ครบ',
+    errRelation: 'กรุณาเลือกหรือระบุความสัมพันธ์กับเจ้าภาพ',
+    errSubmit: 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง',
+    dupSeen: '📋 พบข้อมูลของท่านในระบบแล้ว — การส่งนี้จะ<strong>อัปเดต</strong>ข้อมูลเดิมให้อัตโนมัติ',
+    dupAgain: '📋 ดูเหมือนท่านเคยตอบรับแล้ว — ท่านสามารถส่งใหม่เพื่ออัปเดตข้อมูลได้',
+    okYes: (name, total) => 'ขอบคุณที่ตอบรับคำเชิญของเราครับ/ค่ะ<br>คุณ' + name +
+      ' และผู้ร่วมงานอีก ' + (total - 1) + ' ท่าน รวม ' + total +
+      ' ที่นั่ง ได้รับการยืนยันเรียบร้อย<br><em>เราตั้งตารอที่จะได้ร่วมเฉลิมฉลองค่ำคืนสำคัญนี้ไปด้วยกัน</em>',
+    okNo: () => 'ขอบคุณที่แจ้งให้เราทราบครับ/ค่ะ<br>เสียดายที่ครั้งนี้ไม่ได้ร่วมเฉลิมฉลองด้วยกัน<br><em>เราขอเก็บความปรารถนาดีของท่านไว้ และหวังว่าจะได้พบกันในโอกาสต่อไป</em>'
+  },
+  en: {
+    sending: 'Sending…',
+    errAttend: 'Please tell us whether you can join us.',
+    errName: 'Please enter your full name.',
+    errPhone: 'Please enter a complete phone number.',
+    errRelation: 'Please choose or type whose guest you are.',
+    errSubmit: 'Something went wrong. Please try again.',
+    dupSeen: '📋 We already have an entry for this number — sending this will <strong>update</strong> it automatically',
+    dupAgain: '📋 It looks like you have already replied — you may send again to update your details',
+    okYes: (name, total) => 'Thank you for accepting our invitation.<br>' + name +
+      (total > 1 ? ' and ' + (total - 1) + (total - 1 === 1 ? ' other guest' : ' other guests') : '') +
+      ' — ' + total + (total === 1 ? ' seat' : ' seats') +
+      ' confirmed.<br><em>We cannot wait to celebrate this evening together.</em>',
+    okNo: () => 'Thank you for letting us know.<br>We are sorry you cannot celebrate with us this time.<br><em>We will keep your kind wishes close, and hope to see you before long.</em>'
+  }
+};
+let lang = 'th';
+function t(key) { return STR[lang][key]; }
+
+function setLang(l) {
+  lang = l;
+  document.documentElement.lang = l;
+  document.querySelectorAll('[data-en]').forEach(el => {
+    el.innerHTML = l === 'en' ? el.dataset.en : el.dataset.th;
+  });
+  document.querySelectorAll('[data-en-ph]').forEach(el => {
+    el.placeholder = l === 'en' ? el.dataset.enPh : el.dataset.thPh;
+  });
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.setAttribute('aria-pressed', String(b.dataset.lang === l));
+  });
+  /* the three below are written by script, so the generic swap above cannot reach them */
+  const dn = document.getElementById('dupNotice');
+  if (dn.dataset.key) dn.innerHTML = t(dn.dataset.key);
+  const err = document.getElementById('errorBanner');
+  if (err.dataset.key) err.textContent = t(err.dataset.key);
+  if (document.getElementById('successScreen').classList.contains('show')) renderSuccess();
+  try { localStorage.setItem('rsvp_lang', l); } catch (e) {}
+}
 
 /* ── ATTEND ── */
 function setAttend(val) {
@@ -688,7 +770,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (phone.length >= 9) {
       dupTimer = setTimeout(() => {
         const seen = localStorage.getItem('rsvp_phone');
-        if (seen === phone) { dn.style.display = 'block'; }
+        if (seen === phone) { dn.dataset.key = 'dupSeen'; dn.innerHTML = t('dupSeen'); dn.style.display = 'block'; }
         else { dn.style.display = 'none'; }
       }, 600);
     } else { dn.style.display = 'none'; }
@@ -703,10 +785,10 @@ async function submitRSVP() {
   const rel = relation || document.getElementById('relationCustom').value.trim();
   const msg = document.getElementById('message').value.trim();
 
-  if (attending === null) return showError('กรุณาเลือกว่าจะเข้าร่วมงานหรือไม่');
-  if (!name) return showError('กรุณากรอกชื่อ-นามสกุลของท่าน');
-  if (!phone || phone.replace(/\D/g,'').length < 9) return showError('กรุณากรอกเบอร์โทรศัพท์ให้ครบ');
-  if (!rel) return showError('กรุณาเลือกหรือระบุความสัมพันธ์กับเจ้าภาพ');
+  if (attending === null) return showError('errAttend');
+  if (!name) return showError('errName');
+  if (!phone || phone.replace(/\D/g,'').length < 9) return showError('errPhone');
+  if (!rel) return showError('errRelation');
 
   const nickname = document.getElementById('nickname').value.trim();
   const cleanPhone = phone.replace(/\D/g,'');
@@ -725,7 +807,7 @@ async function submitRSVP() {
 
   const btn = document.getElementById('submitBtn');
   btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span>กำลังส่งข้อมูล…';
+  btn.innerHTML = '<span class="spinner"></span>' + t('sending');
 
   try {
     if (APPS_SCRIPT_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
@@ -742,24 +824,26 @@ async function submitRSVP() {
     showSuccess(name);
   } catch(e) {
     btn.disabled = false;
-    btn.innerHTML = 'ยืนยันการตอบรับ';
-    showError('เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
+    btn.innerHTML = lang === 'en' ? btn.dataset.en : btn.dataset.th;
+    showError('errSubmit');
   }
 }
 
 function showSuccess(name) {
+  successName = name;
   document.getElementById('formSection').classList.add('hidden');
-  const ss = document.getElementById('successScreen');
-  ss.classList.add('show');
-  const body = attending
-    ? 'ขอบคุณที่ตอบรับคำเชิญของเราครับ/ค่ะ<br>คุณ' + name + ' และผู้ร่วมงานอีก ' + (totalGuests - 1) + ' ท่าน รวม ' + totalGuests + ' ที่นั่ง ได้รับการยืนยันเรียบร้อย<br><em>เราตั้งตารอที่จะได้ร่วมเฉลิมฉลองค่ำคืนสำคัญนี้ไปด้วยกัน</em>'
-    : 'ขอบคุณที่แจ้งให้เราทราบครับ/ค่ะ<br>เสียดายที่ครั้งนี้ไม่ได้ร่วมเฉลิมฉลองด้วยกัน<br><em>เราขอเก็บความปรารถนาดีของท่านไว้ และหวังว่าจะได้พบกันในโอกาสต่อไป</em>';
-  document.getElementById('successBody').innerHTML = body;
+  document.getElementById('successScreen').classList.add('show');
+  renderSuccess();
+}
+function renderSuccess() {
+  document.getElementById('successBody').innerHTML =
+    attending ? STR[lang].okYes(successName, totalGuests) : STR[lang].okNo();
 }
 
-function showError(msg) {
+function showError(key) {
   const el = document.getElementById('errorBanner');
-  el.textContent = msg; el.style.display = 'block';
+  el.dataset.key = key;
+  el.textContent = t(key); el.style.display = 'block';
   el.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 function hideError() { document.getElementById('errorBanner').style.display = 'none'; }
@@ -781,11 +865,19 @@ onScroll();
 /* ── already-submitted guard ── */
 window.addEventListener('DOMContentLoaded', () => {
   if (localStorage.getItem('rsvp_submitted') === '1') {
-    document.getElementById('dupNotice').style.display = 'block';
-    document.getElementById('dupNotice').textContent =
-      '📋 ดูเหมือนท่านเคยตอบรับแล้ว — ท่านสามารถส่งใหม่เพื่ออัปเดตข้อมูลได้';
+    const dn = document.getElementById('dupNotice');
+    dn.dataset.key = 'dupAgain';
+    dn.innerHTML = t('dupAgain');
+    dn.style.display = 'block';
   }
 });
+
+/* ── boot the language last: capture every Thai original, then honour the stored choice ── */
+document.querySelectorAll('[data-en]').forEach(el => { el.dataset.th = el.innerHTML.trim(); });
+document.querySelectorAll('[data-en-ph]').forEach(el => { el.dataset.thPh = el.placeholder; });
+let storedLang = null;
+try { storedLang = localStorage.getItem('rsvp_lang'); } catch (e) {}
+setLang(storedLang === 'en' ? 'en' : 'th');
 </script>
 </body>
 </html>
