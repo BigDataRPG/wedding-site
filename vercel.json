@@ -1,5 +1,10 @@
 {
   "cleanUrls": true,
+  "redirects": [
+    { "source": "/rsvp", "destination": "https://aey-boyd.capywedding.com/rsvp", "permanent": true },
+    { "source": "/wedding-rsvp", "destination": "https://aey-boyd.capywedding.com/rsvp", "permanent": true },
+    { "source": "/(.*)", "destination": "https://aey-boyd.capywedding.com/", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",
